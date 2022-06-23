@@ -53,7 +53,10 @@ class Response
             null !== $this->getContentType()
             && (
                 str_contains($this->getContentType(), 'application/x-gzip')
-                || 'binary' == $this->getHeader('Content-Transfer-Encoding')
+                    ||
+                    'binary' == $this->getHeader('Content-Transfer-Encoding')
+                    ||
+                    'gzip' == $this->getHeader('Content-Encoding')
             )
         ) {
             $body = base64_encode($body);
@@ -85,6 +88,9 @@ class Response
 
         $gzip = isset($response['headers']['Content-Type'])
             && str_contains($response['headers']['Content-Type'], 'application/x-gzip');
+
+        $gzip = $gzip || (isset($response['headers']['Content-Encoding'])
+                          && str_contains($response['headers']['Content-Encoding'], 'gzip'));
 
         $binary = isset($response['headers']['Content-Transfer-Encoding'])
             && 'binary' == $response['headers']['Content-Transfer-Encoding'];
