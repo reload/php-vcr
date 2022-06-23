@@ -1,0 +1,66 @@
+
+-
+    request:
+        method: GET
+        url: 'http://example.com/'
+        headers:
+            Host: example.com
+            User-Agent: Unit-Test
+            Accept: '*/*'
+            Accept-Encoding: gzip
+            expect: ''
+    response:
+        status:
+            code: 200
+            message: OK
+        headers:
+            Age: '548617'
+            Cache-Control: max-age=604800
+            Content-Type: 'text/html; charset=UTF-8'
+            Date: 'Thu, 23 Jun 2022 08:04:32 GMT'
+            Etag: '"3147526947+ident"'
+            Expires: 'Thu, 30 Jun 2022 08:04:32 GMT'
+            Last-Modified: 'Thu, 17 Oct 2019 07:18:26 GMT'
+            Server: 'ECS (dcb/7F14)'
+            Vary: Accept-Encoding
+            X-Cache: HIT
+            Content-Length: '1256'
+        body: "This is a httpclient test dummy."
+        curl_info:
+            url: 'http://example.com/'
+            content_type: 'text/html; charset=UTF-8'
+            http_code: 200
+            header_size: 335
+            request_size: 104
+            filetime: -1
+            ssl_verify_result: 0
+            redirect_count: 0
+            total_time: 0.211025
+            namelookup_time: 0.011306
+            connect_time: 0.110719
+            pretransfer_time: 0.11078
+            size_upload: 0.0
+            size_download: 1256.0
+            speed_download: 5951.0
+            speed_upload: 0.0
+            download_content_length: 1256.0
+            upload_content_length: 0.0
+            starttransfer_time: 0.210962
+            redirect_time: 0.0
+            redirect_url: ''
+            primary_ip: 93.184.216.34
+            certinfo: {  }
+            primary_port: 80
+            local_ip: 172.17.0.7
+            local_port: 39270
+            http_version: 2
+            protocol: 1
+            ssl_verifyresult: 0
+            scheme: HTTP
+            appconnect_time_us: 0
+            connect_time_us: 110719
+            namelookup_time_us: 11306
+            pretransfer_time_us: 110780
+            redirect_time_us: 0
+            starttransfer_time_us: 210962
+            total_time_us: 211025
