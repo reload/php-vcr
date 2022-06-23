@@ -131,7 +131,11 @@ class CurlHook implements LibraryHook
         $curlHandle = curl_init($url);
         if (false !== $curlHandle) {
             self::$requests[(int) $curlHandle] = new Request('GET', $url);
-            self::$curlOptions[(int) $curlHandle] = [];
+            self::$curlOptions[(int) $curlHandle] = [
+                // HttpClient expects to see this before the response have
+                // been received.
+                'url' => $url,
+            ];
         }
 
         return $curlHandle;
@@ -267,10 +271,8 @@ class CurlHook implements LibraryHook
     {
         // Workaround for CURLINFO_PRIVATE.
         // It can be set AND read before the response is available, e.g by symfony/http-client.
-        //   - If the response is available, we read from it.
-        //   - If not, we return what was first set.
-        if ($option === CURLINFO_PRIVATE && !in_array((int) $curlHandle, self::$responses, true)) {
-            return static::$curlOptions[(int) $curlHandle][CURLOPT_PRIVATE];
+        if ($option === \CURLINFO_PRIVATE) {
+            return static::$curlOptions[(int) $curlHandle][\CURLOPT_PRIVATE] ?? null;
         }
 
         if (isset(self::$responses[(int) $curlHandle])) {
@@ -281,7 +283,8 @@ class CurlHook implements LibraryHook
         } elseif (isset(self::$lastErrors[(int) $curlHandle])) {
             return self::$lastErrors[(int) $curlHandle]->getInfo();
         } else {
-            throw new \RuntimeException('Unexpected error, could not find curl_getinfo in response or errors');
+            // Return the options set with curl_setopt().
+            return static::$curlOptions[(int) $curlHandle];
         }
     }
 
