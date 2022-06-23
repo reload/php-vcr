@@ -25,7 +25,10 @@ class Response
      */
     protected array $curlInfo = [];
 
-    protected mixed $httpVersion = null;
+    /**
+     * @var mixed
+     */
+    protected $httpVersion = '1.0';
 
     /**
      * @param string|array<string, string> $status
@@ -67,6 +70,7 @@ class Response
                 'status' => [
                     'code' => $this->statusCode,
                     'message' => $this->statusMessage,
+                    'http_version' => $this->httpVersion,
                 ],
                 'headers' => $this->getHeaders(),
                 'body' => $body,
