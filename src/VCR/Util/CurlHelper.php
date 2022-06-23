@@ -36,6 +36,7 @@ class CurlHelper
         \CURLINFO_CONTENT_LENGTH_UPLOAD => 'upload_content_length',
         \CURLINFO_CONTENT_TYPE => 'content_type',
         \CURLINFO_APPCONNECT_TIME => 'appconnect_time',
+        \CURLINFO_CERTINFO => 'certinfo',
     ];
 
     /**
@@ -110,8 +111,8 @@ class CurlHelper
             case \CURLINFO_APPCONNECT_TIME:
                 $info = '';
                 break;
-            case CURLINFO_CERTINFO:
-                $curlInfo = $response->getCurlInfo($option);
+            case \CURLINFO_CERTINFO:
+                $curlInfo = $response->getCurlInfo(self::$curlInfoList[$option]);
                 $info = (!is_null($curlInfo)) ? $curlInfo : [];
                 break;
             default:
