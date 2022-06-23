@@ -90,11 +90,11 @@ class HttpUtil
     }
 
     /**
-     * Returns a list of headers from a key/value paired array.
+     * Returns a list of headers for curl from a key/value paired array.
      *
      * @param array<string,string|array<string,string>|null> $headers Headers as key/value pairs
      *
-     * @return string[] List of headers ["Content-Type: text/html\r\n", '...'].
+     * @return string[] List of headers ["Content-Type: text/html", '...'].
      */
     public static function formatHeadersForCurl(array $headers): array
     {
@@ -103,14 +103,28 @@ class HttpUtil
         foreach ($headers as $key => $values) {
             if (\is_array($values)) {
                 foreach ($values as $value) {
-                    $curlHeaders[] = $key.': '.$value . "\r\n";
+                    $curlHeaders[] = $key.': '.$value;
                 }
             } else {
-                $curlHeaders[] = $key.': '.$values . "\r\n";
+                $curlHeaders[] = $key.': '.$values;
             }
         }
 
         return $curlHeaders;
+    }
+
+    /**
+     * Returns a list of headers from a key/value paired array, like curl returns them.
+     *
+     * @param array<string,string|array<string,string>|null> $headers Headers as key/value pairs
+     *
+     * @return string[] List of headers ["Content-Type: text/html\r\n", '...'].
+     */
+    public static function formatHeadersLikeCurl(array $headers): array
+    {
+        return array_map(function ($header) {
+            return $header . "\r\n";
+        }, self::formatHeadersForCurl($headers));
     }
 
     /**

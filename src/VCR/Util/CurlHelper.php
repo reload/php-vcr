@@ -54,7 +54,7 @@ class CurlHelper
         // If there is a header function set, feed the http status and headers to it.
         if (isset($curlOptions[\CURLOPT_HEADERFUNCTION])) {
             $headerList = [HttpUtil::formatAsStatusString($response)];
-            $headerList = array_merge($headerList, HttpUtil::formatHeadersForCurl($response->getHeaders()));
+            $headerList = array_merge($headerList, HttpUtil::formatHeadersLikeCurl($response->getHeaders()));
             $headerList[] = "\r\n";
             foreach ($headerList as $header) {
                 self::callFunction($curlOptions[\CURLOPT_HEADERFUNCTION], $ch, $header);
